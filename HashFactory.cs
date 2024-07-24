@@ -173,9 +173,17 @@ namespace SignatureCraft
         /// <param name="data">The character span containing the data to hash.</param>
         public void ComputeHash(ReadOnlySpan<char> data)
         {
+            Init();
             _resultBytes = INSTANCE.ComputeHash(Merge(IV, GetShaBytes(data)));
             ConvertToString();
             _success = true;
+        }
+
+        private void Init()
+        {
+            _resultBytes = Array.Empty<byte>();
+            _result = string.Empty;
+            _success = false;
         }
 
         /// <summary>
@@ -184,6 +192,7 @@ namespace SignatureCraft
         /// <param name="data">The byte array containing the data to hash.</param>
         public void ComputeHash(byte[] data)
         {
+            Init();
             _resultBytes = INSTANCE.ComputeHash(Merge(IV, data));
             ConvertToString();
             _success = true;
@@ -195,6 +204,7 @@ namespace SignatureCraft
         /// <param name="data">The stream containing the data to hash.</param>
         public void ComputeHash(Stream data)
         {
+            Init();
             _resultBytes = INSTANCE.ComputeHash(Merge(IV, StreamToArray(data)));
             ConvertToString();
             _success = true;
@@ -206,6 +216,7 @@ namespace SignatureCraft
         /// <param name="data">The file stream containing the data to hash.</param>
         public void ComputeHash(FileStream data)
         {
+            Init();
             _resultBytes = INSTANCE.ComputeHash(Merge(IV, StreamToArray(data)));
             ConvertToString();
             _success = true;
@@ -217,6 +228,7 @@ namespace SignatureCraft
         /// <param name="data">The memory stream containing the data to hash.</param>
         public void ComputeHash(MemoryStream data)
         {
+            Init();
             _resultBytes = INSTANCE.ComputeHash(Merge(IV, StreamToArray(data)));
             ConvertToString();
             _success = true;
